@@ -26,3 +26,23 @@ func StraightForwardSolution(nums []int) int {
 	}
 	return 0
 }
+
+func startFromMiddleSolution(nums []int) int {
+	index := 0
+	var b func(int, int)
+	b = func(left int, right int) {
+		mid := (right-left)/2 + left
+		if nums[mid] < nums[mid-1] {
+			right = mid - 1
+			b(left, right)
+		} else if nums[mid+1] > nums[mid] {
+			left = mid + 1
+			b(left, right)
+		} else {
+			index = mid
+			return
+		}
+	}
+	b(0, len(nums)-1)
+	return index
+}

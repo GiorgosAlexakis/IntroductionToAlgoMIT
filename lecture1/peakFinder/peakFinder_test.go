@@ -29,10 +29,6 @@ func checkIfExists(num int, peaks []int) bool {
 
 var qs []question = []question{
 	{
-		params{[]int{0}},
-		ans{[]int{0}},
-	},
-	{
 		params{[]int{1, 2, 1, 0}},
 		ans{[]int{1}},
 	},
@@ -56,12 +52,25 @@ var qs []question = []question{
 		params{[]int{1, 1, 1, 1}},
 		ans{[]int{0, 1, 2, 3}},
 	},
+	{
+		params{[]int{0}},
+		ans{[]int{0}},
+	},
 }
 
 func Test_Solutions(t *testing.T) {
 	for _, q := range qs {
 		solutionToCheck := StraightForwardSolution(q.nums)
 		fmt.Printf("Testing StraightForward implementation for array: %d\n", q.nums)
+		if !checkIfExists(solutionToCheck, q.ans.peaks) {
+			t.Errorf("Your solution: %d for given array %d, doesn't match any of the possible solutions %d", solutionToCheck, q.nums, q.ans.peaks)
+		} else {
+			fmt.Printf("Your solution: %d, possible solutions %d\n", solutionToCheck, q.ans.peaks)
+		}
+	}
+	for _, q := range qs {
+		solutionToCheck := startFromMiddleSolution(q.nums)
+		fmt.Printf("Testing startFromMiddle implementation for array: %d\n", q.nums)
 		if !checkIfExists(solutionToCheck, q.ans.peaks) {
 			t.Errorf("Your solution: %d for given array %d, doesn't match any of the possible solutions %d", solutionToCheck, q.nums, q.ans.peaks)
 		} else {
